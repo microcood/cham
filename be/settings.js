@@ -4,8 +4,10 @@ var path = require("path")
 var appSettings = {
     DEBUG: true,
     PORT: 8000,
-    IP: "0.0.0.0",
-    STATIC: path.join(__dirname + "/../fe")
+    IP: "127.0.0.1",
+    STATIC: path.join(__dirname + "/../fe"),
+    WS_HOST: "localhost",
+    WS_PORT: 8000
 }
 
 try {

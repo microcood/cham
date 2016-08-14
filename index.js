@@ -2,32 +2,26 @@ var http = require("http")
 var path = require("path")
 var fs = require("fs")
 var wsock = require("ws")
+var express = require("express")
+var nunjucks = require("nunjucks")
 
 var settings = require("./be/settings")
 
-var httpServer = http.createServer(function (request, response) {
-    console.log(request.url)
-    var filename = "/templates/index.html"
-    if (path.extname(request.url)) {
-        filename = request.url
-    }
-    if (!fs.existsSync(settings.STATIC + filename)) {
-        response.writeHead(404)
-        response.end()
-        return
-    }
-    fs.readFile(settings.STATIC + filename, "binary", function (err, file) {
-        if (err) {
-            response.writeHead(500)
-            response.end()
-            return
-        }
+var app = express()
 
-        response.writeHead(200, {'Content-Type': 'text/html'})
-        response.write(file, "binary")
-        response.end()
-    });
-});
+app.use('/scripts/', express.static(settings.STATIC + "/scripts/"));
+
+nunjucks.configure('fe/templates', {
+    express: app
+})
+
+app.get('/', (req, res) => {
+    res.render("index.html",  {
+        WEBSOCKETS_URL: `ws:${settings.WS_HOST}:${settings.WS_PORT}`
+    })
+})
+
+var httpServer = http.createServer(app);
 httpServer.listen(settings.PORT, settings.IP)
 
 var WebSocketServer = wsock.Server

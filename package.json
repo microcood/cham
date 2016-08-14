@@ -10,13 +10,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.14.0",
     "lodash": "^4.15.0",
-    "ts-loader": "^0.8.2",
-    "typescript": "^2.1.0-dev.20160813",
-    "webpack": "^2.1.0-beta.20",
+    "nunjucks": "^2.4.2",
     "ws": "^1.1.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "ts-loader": "^0.8.2",
+    "typescript": "^2.1.0-dev.20160814",
+    "webpack": "^2.1.0-beta.20"
+  },
   "keywords": [],
   "description": ""
 }
