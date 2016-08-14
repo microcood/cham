@@ -7,39 +7,39 @@ var settings = require("./be/settings")
 
 var httpServer = http.createServer(function (request, response) {
     console.log(request.url)
-    var filename = "/templates/index.html";
+    var filename = "/templates/index.html"
     if (path.extname(request.url)) {
-        filename = request.url;
+        filename = request.url
     }
     if (!fs.existsSync(settings.STATIC + filename)) {
-        response.writeHead(404);
-        response.end();
-        return;
+        response.writeHead(404)
+        response.end()
+        return
     }
     fs.readFile(settings.STATIC + filename, "binary", function (err, file) {
         if (err) {
-            response.writeHead(500);
-            response.end();
-            return;
+            response.writeHead(500)
+            response.end()
+            return
         }
 
-        response.writeHead(200);
-        response.write(file, "binary");
-        response.end();
+        res.writeHead(200, {'Content-Type': 'text/html'})
+        response.write(file, "binary")
+        response.end()
     });
 });
-httpServer.listen(settings.PORT, settings.IP);
+httpServer.listen(settings.PORT, settings.IP)
 
-var WebSocketServer = wsock.Server;
+var WebSocketServer = wsock.Server
 var wss = new WebSocketServer({
     server: httpServer,
     autoAcceptConnections: false
-});
+})
 
 wss.on('connection', function (ws) {
     ws.on('message', function (message) {
-        console.log('received: ' + message);
-    });
+        console.log('received: ' + message)
+    })
 
-    ws.send('hello world');
-});
+    ws.send('hello world')
+})
