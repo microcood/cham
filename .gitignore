@@ -1,0 +1,3 @@
+node_modules/
+fe/scripts/*.js
+be/localSettings.js
