@@ -16,6 +16,7 @@
     "ws": "^1.1.1"
   },
   "devDependencies": {
+    "@types/webrtc": "0.0.15",
     "ts-loader": "^0.8.2",
     "typescript": "^2.1.0-dev.20160814",
     "webpack": "^2.1.0-beta.20"

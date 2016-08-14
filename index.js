@@ -33,7 +33,6 @@ var wss = new WebSocketServer({
 wss.on('connection', function (ws) {
     ws.on('message', function (message) {
         console.log('received: ' + message)
+        ws.send(message)
     })
-
-    ws.send('hello world')
 })
