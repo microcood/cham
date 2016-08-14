@@ -1,7 +1,7 @@
 var http = require("http")
 var path = require("path")
 var fs = require("fs")
-var uws = require("uws")
+var wsock = require("ws")
 
 var settings = require("./be/settings")
 
@@ -30,7 +30,7 @@ var httpServer = http.createServer(function (request, response) {
 });
 httpServer.listen(settings.PORT, settings.IP);
 
-var WebSocketServer = uws.Server;
+var WebSocketServer = wsock.Server;
 var wss = new WebSocketServer({
     server: httpServer,
     autoAcceptConnections: false
