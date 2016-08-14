@@ -23,7 +23,7 @@ var httpServer = http.createServer(function (request, response) {
             return
         }
 
-        res.writeHead(200, {'Content-Type': 'text/html'})
+        response.writeHead(200, {'Content-Type': 'text/html'})
         response.write(file, "binary")
         response.end()
     });
