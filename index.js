@@ -12,7 +12,8 @@ var app = express()
 app.use('/scripts/', express.static(settings.STATIC + "/scripts/"));
 
 nunjucks.configure('fe/templates', {
-    express: app
+    express: app,
+    noCache: settings.DEBUG
 })
 
 app.get('/', (req, res) => {
@@ -30,9 +31,17 @@ var wss = new WebSocketServer({
     autoAcceptConnections: false
 })
 
-wss.on('connection', function (ws) {
-    ws.on('message', function (message) {
+
+let wsConnections = []
+
+wss.on('connection', (ws) => {
+    wsConnections.push(ws)
+    ws.on('message', (message) => {
         console.log('received: ' + message)
-        ws.send(message)
+        wsConnections.forEach((w) => {
+            if (w.readyState == w.OPEN) {
+                w.send(message)
+            }
+        })
     })
 })

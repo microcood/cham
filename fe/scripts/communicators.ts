@@ -16,11 +16,11 @@ class Communicator {
     }
     connection: RTCPeerConnection
     channel: RTCDataChannel
-    socket: WebSocket
-    constructor(ws) {
+    push: Function
+    constructor(push) {
         this.connection = new RTCPeerConnection(this.config)
         this.setConnectionEvents()
-        this.socket = ws
+        this.push = push
     }
     setChannelEvents() {
         this.channel.onmessage = event => console.log(event.data)
@@ -30,9 +30,9 @@ class Communicator {
     setConnectionEvents() {
         this.connection.onicecandidate = (event) => {
             if (event.candidate) {
-                this.socket.send(JSON.stringify({
+                this.push({
                     candidate: event.candidate
-                }))
+                })
             }
         }
     }
@@ -45,9 +45,9 @@ class Communicator {
     }
     descriptionHandler(sdp) {
         this.connection.setLocalDescription(sdp)
-        this.socket.send(JSON.stringify({
+        this.push({
             sdp: sdp
-        }))
+        })
     }
     setRemoteDescription(sdp) {
         let sessionDescription = new RTCSessionDescription(sdp)
@@ -70,7 +70,9 @@ export class Host extends Communicator {
 export class Guest extends Communicator {
     createAnswer(sdp) {
         this.setRemoteDescription(sdp)
-        this.connection.createAnswer(this.descriptionHandler.bind(this))
+        this.connection.createAnswer(this.descriptionHandler.bind(this), function () {
+            console.log('error', arguments)
+        })
     }
     setConnectionEvents() {
         super.setConnectionEvents()

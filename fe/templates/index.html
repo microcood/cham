@@ -10,8 +10,39 @@
         <script defer>
             var WEBSOCKETS_URL = '{{ WEBSOCKETS_URL }}'
         </script>
+        <style>
+            [ng-cloak] { display:none; }
+            .block { width: 30%; float: left; padding: 20px }
+            textarea { width: 100%; display: block }
+        </style>
     </head>
-    <body>
-        <h1>Hello world</h1>
+    <body ng-app="app" ng-controller="main" ng-cloak>
+        <div class="stats block">
+            <h3>User <span ng-bind="userId"></span></h2>
+            <h3>Connected users <span ng-bind="connectedUsers.length"></span></h3>
+            <table>
+                <thead>
+                    <tr ng-repeat="user in connectedUsers">
+                        <td ng-bind="user"></td>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="form block">
+            <form ng-submit="textSubmit()" ng-if="connectedUsers.length > 0">
+                <textarea ng-model="a.messageText"></textarea>
+                <br>
+                <button type="submit">Click me</button>
+            </form>
+        </div>
+        <div class="chat block">
+            <table ng-if="messages.length > 0">
+                <tr ng-repeat="m in messages">
+                    <td ng-bind="m.userId"></td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td ng-bind="m.text"></td>
+                </tr>
+            </table>
+        </div>
     </body>
 </html>

@@ -10,6 +10,7 @@ module.exports = {
         ]
     },
     entry: "./fe/scripts/app.ts",
+    noParse: ["node_modules"],
     output: {
         path: "./fe/scripts/",
         filename: "app.js"

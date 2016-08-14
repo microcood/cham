@@ -16,7 +16,9 @@
     "ws": "^1.1.1"
   },
   "devDependencies": {
+    "@types/angular": "^1.5.10",
     "@types/webrtc": "0.0.15",
+    "angular": "^1.5.8",
     "ts-loader": "^0.8.2",
     "typescript": "^2.1.0-dev.20160814",
     "webpack": "^2.1.0-beta.20"
